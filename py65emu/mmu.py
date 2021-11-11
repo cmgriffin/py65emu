@@ -76,7 +76,10 @@ class MMU:
 
         elif value is not None:
             a = array.array('B')
-            a.fromstring(value.read())
+            try:
+                a.fromstring(value.read())
+            except AttributeError:
+                a.frombytes(value.read())
             for i in range(len(a)):
                 newBlock['memory'][i+valueOffset] = a[i]
 
